@@ -3,6 +3,9 @@ import Tab from "./Tab";
 import PropTypes from "prop-types";
 
 const Tabs = props => {
+  console.log("---------tabs on click is " + props.onClick);
+  console.log("---------tabs on click is " + props.selectedTab);
+
   return (
     <div className="tabs">
       <div className="topics">
@@ -10,7 +13,12 @@ const Tabs = props => {
         {/* map over the tabs provided on your props, create a new Tab component for each one.
             give the tab component a `selectTabHandler`, the `selectedTab`, and the `tab` itself as props*/
         props.tabs.map((tab, index) => (
-          <Tab key={index} tab={tab} />
+          <Tab
+            key={index}
+            tab={tab}
+            onClick={props.onClick}
+            selectedTab={props.selectedTab}
+          />
         ))}
       </div>
     </div>

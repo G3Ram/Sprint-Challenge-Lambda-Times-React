@@ -21,16 +21,7 @@ const Card = props => {
 Card.propTypes = {
   card: PropTypes.shape({
     headline: PropTypes.string.isRequired,
-    tab: PropTypes.arrayOf(
-      PropTypes.oneOf([
-        "all",
-        "javascript",
-        "technology",
-        "node",
-        "React.js",
-        "bootstrap"
-      ])
-    ).isRequired,
+    tab: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired
   })
