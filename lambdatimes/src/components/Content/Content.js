@@ -47,7 +47,6 @@ export default class Content extends Component {
   };
 
   selectTabHandler = tab => {
-    console.log("This is clicked ======>" + tab);
     this.setState(prevState => {
       const filteredCards = prevState.cards.filter(card => {
         return card.tab === tab;
