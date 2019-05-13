@@ -1,23 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Tabs from './Tabs';
-import Cards from './Cards';
+import Tabs from "./Tabs";
+import Cards from "./Cards";
 
 // Importing our tab and card data. No need to change anything here.
-import { tabData, cardData } from '../../data';
+import { tabData, cardData } from "../../data";
 
 export default class Content extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: 'all',
+      selected: "all",
       tabs: [],
-      cards: []
+      cards: [],
+      filteredCards: []
     };
   }
 
   componentDidMount() {
     // Once the component has mounted, get the data and reflect that data on the state.
+    this.setState({
+      tabs: tabData,
+      cards: cardData,
+      filteredCards: cardData
+    });
   }
 
   changeSelected = tab => {
@@ -37,7 +43,26 @@ export default class Content extends Component {
           of the items from cardData. 
         - else, it should only return those cards whose 'tab' matched this.state.selected.
     */
-    return this.state.cards;
+    return this.state.filteredCards;
+  };
+
+  selectTabHandler = tab => {
+    this.setState(prevState => {
+      const filteredCards = prevState.cards.filter(card => {
+        return card.tab === tab;
+      });
+      if (!(filteredCards.length === 0)) {
+        return {
+          selected: tab,
+          filteredCards: filteredCards
+        };
+      } else {
+        return {
+          selected: tab,
+          filteredCards: this.state.cards
+        };
+      }
+    });
   };
 
   render() {
@@ -48,7 +73,11 @@ export default class Content extends Component {
           `selectedTab` that includes the currently selected tab
           and `selectTabHandler` that includes the function to change the selected tab
         */}
-        <Tabs tabs={this.state.tabs} />
+        <Tabs
+          tabs={this.state.tabs}
+          selectedTab={this.state.selected}
+          onClick={this.selectTabHandler}
+        />
         <Cards cards={this.filterCards()} />
       </div>
     );
